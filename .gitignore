@@ -1,0 +1,5 @@
+# Flutter/Dart/Pub related
+node_modules/
+
+# Obfuscation related
+# *key.json
