@@ -40,5 +40,3 @@ app.delete('/delete_user/:uid', (req, res) => {
 app.listen(port, 'localhost', () => {
     console.log(`Server is running on port ${port}`);
 });
-
-export default app;
