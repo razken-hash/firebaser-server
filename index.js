@@ -1,6 +1,7 @@
 const express = require('express');
 const admin = require('firebase-admin');
 const serviceAccount = require('./firebaser_private_key.json');
+require("dotenv").config();
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -36,6 +37,29 @@ app.delete('/delete_user/:uid', (req, res) => {
             res.status(500).json({ error: 'Error: Delete User' });
         });
 });
+
+
+
+//! Messaging
+
+const accountSID = "AC441435112189e02e5aa92750cbf2a28d";
+const authToken = "017e27530ddb73ff3ffde08d80a7984e";
+
+const client = require('twilio')(accountSID, authToken);
+
+app.get('/send_sms', async (req, res) => {
+    const uid = req.params.uid;
+    const msgOptions = {
+        from: "+16193822368",
+        to: req.params.destination,
+        body: req.params.content
+    }
+    const message = await client.messages.create(msgOptions);
+    res.json(message);
+});
+
+
+
 
 app.listen(port, 'localhost', () => {
     console.log(`Server is running on port ${port}`);
